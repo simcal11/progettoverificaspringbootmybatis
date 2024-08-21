@@ -1,4 +1,4 @@
-## Progetto Verifica Sprinboot Mybatis
+## Progetto Verifica Springboot Mybatis
 
 # Git
 1. Creazione di questa repository per il versionamento del codice per lo sviluppo del Progetto Verifica
