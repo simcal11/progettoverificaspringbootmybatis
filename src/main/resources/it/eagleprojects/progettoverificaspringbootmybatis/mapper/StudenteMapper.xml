@@ -1,0 +1,113 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="it.eagleprojects.progettoverificaspringbootmybatis.mapper.StudenteMapper">
+
+    <resultMap type="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente" id="studenteResult">
+        <id property="id" column="id" />
+        <result property="nome" column="nome" />
+        <result property="cognome" column="cognome" />
+        <result property="email" column="email" />
+        <result property="matricola" column="matricola" />
+        <collection property="corsi" ofType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso"
+                    resultMap="corsoResult" />
+    </resultMap>
+
+    <resultMap type="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso" id="corsoResult">
+        <id property="id" column="corso_id" />
+        <result property="nome" column="corso_nome" />
+        <result property="cfu" column="corso_cfu" />
+        <result property="ore" column="corso_ore" />
+    </resultMap>
+
+
+    <resultMap type="it.eagleprojects.progettoverificaspringbootmybatis.model.CorsiStudentiIscrizioni" id="csiResult">
+        <result property="corsoId" column="corsoid" />
+        <result property="studenteId" column="studenteid" />
+    </resultMap>
+
+
+    <select id="getAllStudenti" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente" resultMap="studenteResult">
+        SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
+            as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
+               corso_ore
+        FROM studenti s LEFT JOIN corsi_studenti_iscrizioni csi
+                                        on s.id = csi.studenteid LEFT JOIN corsi c on c.id = csi.corsoid
+    </select>
+
+    <select id="getStudenteById" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente" resultMap="studenteResult">
+        SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
+            as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
+               corso_ore
+        FROM studenti s LEFT JOIN corsi_studenti_iscrizioni csi
+                                        on s.id = csi.studenteid LEFT JOIN corsi c on c.id = csi.corsoid
+        WHERE s.id
+                  = #{studenteId}
+    </select>
+
+
+
+    <select id="getAllStudentiByCorsoId" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente"
+            resultMap="studenteResult">
+        SELECT s.id, s.nome, s.cognome, s.email, s.matricola
+        FROM
+            studenti s JOIN corsi_studenti_iscrizioni csi on s.id = csi.studenteid
+                       JOIN corsi c on c.id = csi.corsoid
+        WHERE c.id = #{corsoId}
+    </select>
+
+
+
+    <insert id="insertStudente" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente"
+            keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO studenti (nome, cognome, email, matricola)
+        VALUES (#{nome}, #{cognome}, #{email}, #{matricola})
+    </insert>
+
+    <update id="updateStudenteById" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente">
+        UPDATE studenti
+        SET nome=#{nome}, cognome=#{cognome}, email=#{email},
+            matricola=#{matricola}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteAllStudenti" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente">
+        DELETE FROM
+            studenti
+    </delete>
+
+    <delete id="deleteStudenteById" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente">
+        DELETE FROM
+            studenti
+        WHERE id=#{studenteId}
+    </delete>
+
+    <!--
+    <select id="getAllStudentiByCorsoId" resultType="studente"
+            resultMap="studenteResult">
+        SELECT s.id, s.nome, s.cognome, s.email, s.matricola
+        FROM
+            studenti s JOIN corsi_studenti_iscrizioni csi on s.id = csi.studenteid
+                       JOIN corsi c on c.id = csi.corsoid
+        WHERE c.id = #{corsoId}
+    </select>
+
+
+    <insert id="insertStudenteToCorso" parameterType="csi">
+        INSERT INTO
+            corsi_studenti_iscrizioni(corsoid, studenteid)
+        VALUES (#{corsoId},
+                #{studenteId})
+    </insert>
+
+
+    <delete id="deleteStudenteFromCorso" parameterType="studente">
+        DELETE FROM
+            corsi_studenti_iscrizioni
+        WHERE corsoid = #{corsoId} AND studenteid =
+                                       #{studenteId}
+    </delete>
+
+    -->
+
+</mapper>

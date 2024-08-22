@@ -1,29 +1,30 @@
 package it.eagleprojects.progettoverificaspringbootmybatis.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Studente implements Serializable {
-
     private Long id;
     private String nome;
     private String cognome;
     private String email;
     private String matricola;
-
+    private List<Corso> corsi;
 
     public Studente() {
 
     }
 
-    public Studente(Long id, String nome, String cognome, String email, String matricola
-    ) {
+    public Studente(Long id, String nome, String cognome, String email, String matricola, List<Corso> corsi) {
         super();
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.matricola = matricola;
+        this.corsi = corsi;
     }
 
     public Long getId() {
@@ -34,20 +35,12 @@ public class Studente implements Serializable {
         this.id = id;
     }
 
-    public String getMatricola() {
-        return matricola;
+    public String getNome() {
+        return nome;
     }
 
-    public void setMatricola(String matricola) {
-        this.matricola = matricola;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCognome() {
@@ -58,24 +51,46 @@ public class Studente implements Serializable {
         this.cognome = cognome;
     }
 
-    public String getNome() {
-        return nome;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Studente studente = (Studente) o;
-        return Objects.equals(id, studente.id) && Objects.equals(nome, studente.nome) && Objects.equals(cognome, studente.cognome) && Objects.equals(email, studente.email) && Objects.equals(matricola, studente.matricola);
+    public String getMatricola() {
+        return matricola;
+    }
+
+    public void setMatricola(String matricola) {
+        this.matricola = matricola;
+    }
+
+    public List<Corso> getCorsi() {
+        return corsi;
+    }
+
+    public void setCorsi(List<Corso> corsi) {
+        this.corsi = corsi;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, cognome, email, matricola);
+        return Objects.hash(cognome, corsi, email, id, matricola, nome);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if ((obj == null) || (getClass() != obj.getClass())) {
+            return false;
+        }
+        Studente other = (Studente) obj;
+        return Objects.equals(cognome, other.cognome) && Objects.equals(corsi, other.corsi)
+                && Objects.equals(email, other.email) && Objects.equals(id, other.id) && matricola == other.matricola
+                && Objects.equals(nome, other.nome);
     }
 }

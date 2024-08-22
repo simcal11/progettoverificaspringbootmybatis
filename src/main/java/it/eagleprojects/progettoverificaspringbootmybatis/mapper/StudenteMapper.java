@@ -8,23 +8,16 @@ import java.util.List;
 @Mapper
 public interface StudenteMapper {
 
-    @Select("select id, nome, cognome, matricola, email from studenti where id = #{id}")
-    Studente findById(@Param("id") Long id);
+    List<Studente> getAllStudenti();
 
-    @Select("select id, nome, cognome, matricola, email from studenti")
-    List<Studente> findAll();
+    Studente getStudenteById(Long studenteId);
 
-    @Insert("insert into studenti(nome,cognome, matricola, email) values(nome=#{nome},cognome=#{cognome}, matricola=#{matricola}, email=#{email})")
-    void add(Studente studente);
+    void insertStudente(Studente studente);
 
+    void updateStudenteById(Studente studente);
 
-    @Update("update studenti set nome=#{nome},cognome=#{cognome}, matricola=#{matricola}, email=#{email} where id=#{id}")
-    void update(Studente studente, Long id);
+    void deleteStudenteById(Long studenteId);
 
-    @Delete("delete from studenti where id = #{id}")
-    void delete(Long id);
+    void deleteAllStudenti();
 
-    @Delete("delete from studenti")
-    void deleteAll();
 }
-
