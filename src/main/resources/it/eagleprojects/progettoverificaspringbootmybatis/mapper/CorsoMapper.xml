@@ -49,7 +49,7 @@
     <select id="getAllCorsiByStudenteId" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso"
             resultMap="corsoResult">
         SELECT c.id, c.nome, c.cfu, c.ore
-        FROM corsi c JOIN corsi_studenti_iscrizioni csi on c.id  = csi.studenteid JOIN studenti s on s.id  = csi.studenteid
+        FROM corsi c JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid JOIN studenti s on s.id  = csi.studenteid
         WHERE s.id = #{studenteId}
     </select>
 
