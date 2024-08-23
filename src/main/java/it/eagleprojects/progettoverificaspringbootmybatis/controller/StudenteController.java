@@ -64,7 +64,6 @@ public class StudenteController {
     }
 
 
-
     @Operation(summary = "Metodo che permette di aggiungere uno Studente")
     @PostMapping("/studenti")
     public ResponseEntity<Studente> insertStudente(@RequestBody Studente studente){
@@ -72,6 +71,32 @@ public class StudenteController {
         studenteMapper.insertStudente(studente);
         return new ResponseEntity<>(studente,  HttpStatus.CREATED);
     }
+
+
+    @Operation(summary = "Metodo che permette di aggiungere uno Studente ad un Corso")
+    @PostMapping("/corsi/{corsoId}/studenti")
+    public @ResponseBody ResponseEntity<Studente> insertStudenteToCorso(@PathVariable(value = "corsoId") Long corsoId,
+                                                                     @RequestBody Studente studente) throws Exception {
+
+        if (corsoMapper.getCorsoById(corsoId) == null) {
+            throw new Exception("Non esiste un Corso con id = " + corsoId);
+        }
+
+        if (studente.getId() == null) {
+            throw new Exception("Non è stato specifica l'id dello studente da aggiungere " + studente.getId());
+        }
+
+        if (studenteMapper.getStudenteById(studente.getId()) == null) {
+            throw new Exception("Non esiste uno Studente con id = " + studente.getId());
+        }
+
+        studenteMapper.insertStudenteToCorso(corsoId, studente);
+
+        return new ResponseEntity<>(studente, HttpStatus.CREATED);
+
+    }
+
+
 
     @Operation(summary = "Metodo che permette di aggiornare uno Studente")
     @PutMapping("studenti/{studenteId}")
@@ -123,4 +148,26 @@ public class StudenteController {
         studenteMapper.deleteStudenteById(studenteId);
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
+
+    @Operation(summary = "Metodo che permette di eliminare uno Studente da un Corso")
+    @DeleteMapping("corsi/{corsoId}/studenti")
+    public @ResponseBody ResponseEntity<Studente>  deleteStudenteFromCorso(@PathVariable(value = "corsoId") Long corsoId,
+                                                                           @RequestBody Studente studente) throws Exception {
+
+        if (corsoMapper.getCorsoById(corsoId) == null) {
+            throw new Exception("Non esiste un Corso con id = " + corsoId);
+        }
+
+        if (studente.getId() == null) {
+            throw new Exception("Non è stato specifica l'id dello studente da eliminare " + studente.getId());
+        }
+
+        if (studenteMapper.getStudenteById(studente.getId()) == null) {
+            throw new Exception("Non esiste uno Studente con id = " + studente.getId());
+        }
+
+        studenteMapper.deleteStudenteFromCorso(corsoId, studente);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
 }

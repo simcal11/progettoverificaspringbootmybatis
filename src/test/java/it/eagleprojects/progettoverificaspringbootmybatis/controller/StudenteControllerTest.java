@@ -119,4 +119,34 @@ public class StudenteControllerTest {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/studenti/" + id.toString()))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    public void testA7InsertStudenteToCorsoTest() throws Exception {
+
+        Long idStudente = 3L;
+        Long idCorso = 1L;
+        String requestBody = "{\"id\":"+idStudente.toString() +"}";
+
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.post("/corsi/"+idCorso.toString()+"/studenti").contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                ).andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testA8DeleteStudenteFromCorsoTest() throws Exception {
+
+        Long idStudente = 3L;
+        Long idCorso = 1L;
+        String requestBody = "{\"id\":"+idStudente.toString() +"}";
+
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.delete("/corsi/"+idCorso.toString()+"/studenti").contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                ).andExpect(status().isNoContent());
+    }
 }

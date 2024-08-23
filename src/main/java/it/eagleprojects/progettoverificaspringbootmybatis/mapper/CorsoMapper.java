@@ -19,10 +19,14 @@ public interface CorsoMapper {
 
     void insertCorso(Corso corso);
 
+    void insertCorsoToStudente(Long studenteId, Corso corso);
+
     void updateCorsoById(Corso corso);
 
     void deleteCorsoById(Long corsoId);
 
     void deleteAllCorsi();
+
+    void deleteCorsoFromStudente(Long studenteId, Corso corso);
 
 }

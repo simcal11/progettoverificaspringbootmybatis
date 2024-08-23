@@ -59,6 +59,13 @@
         VALUES (#{nome}, #{cfu}, #{ore})
     </insert>
 
+    <insert id="insertCorsoToStudente" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.CorsiStudentiIscrizioni">
+        INSERT INTO
+            corsi_studenti_iscrizioni(corsoid, studenteid)
+        VALUES (#{corso.id},
+                #{studenteId})
+    </insert>
+
     <update id="updateCorsoById" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso">
         UPDATE corsi
         SET nome= #{nome}, cfu= #{cfu}, ore= #{ore}
@@ -74,19 +81,10 @@
         DELETE FROM corsi
     </delete>
 
-
-    <!--
-
-    <insert id="insertCorsoToStudente" parameterType="csi">
-        INSERT INTO corsi_studenti_iscrizioni(corsoid, studenteid)
-        VALUES (#{corsoId}, #{studenteId})
-    </insert>
-
-    <delete id="deleteCorsoFromStudente" parameterType="corso">
+    <delete id="deleteCorsoFromStudente" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.CorsiStudentiIscrizioni">
         DELETE FROM corsi_studenti_iscrizioni
-        WHERE corsoid = #{corsoId} AND studenteid = #{studenteId}
+        WHERE corsoid = #{corso.id} AND studenteid = #{studenteId}
     </delete>
 
-    -->
 
 </mapper>

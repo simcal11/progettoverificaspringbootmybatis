@@ -18,10 +18,14 @@ public interface StudenteMapper {
 
     void insertStudente(Studente studente);
 
+    void insertStudenteToCorso(Long corsoId, Studente studente);
+
     void updateStudenteById(Studente studente);
 
     void deleteStudenteById(Long studenteId);
 
     void deleteAllStudenti();
+
+    void deleteStudenteFromCorso(Long corsoId, Studente studente);
 
 }
