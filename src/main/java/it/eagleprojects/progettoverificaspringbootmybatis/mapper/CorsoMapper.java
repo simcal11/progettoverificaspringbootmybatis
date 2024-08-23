@@ -15,6 +15,8 @@ public interface CorsoMapper {
 
     Corso getCorsoByNome(String corsoNome);
 
+    List<Corso> getAllCorsiByStudenteId(Long studenteId);
+
     void insertCorso(Corso corso);
 
     void updateCorsoById(Corso corso);

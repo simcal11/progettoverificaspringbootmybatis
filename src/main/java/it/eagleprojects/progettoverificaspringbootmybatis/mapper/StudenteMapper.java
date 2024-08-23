@@ -14,6 +14,8 @@ public interface StudenteMapper {
 
     Studente getStudenteByMatricola(String matricola);
 
+    List<Studente> getAllStudentiByCorsoId(Long corsoId);
+
     void insertStudente(Studente studente);
 
     void updateStudenteById(Studente studente);

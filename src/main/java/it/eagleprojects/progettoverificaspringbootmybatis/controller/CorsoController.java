@@ -2,6 +2,7 @@ package it.eagleprojects.progettoverificaspringbootmybatis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import it.eagleprojects.progettoverificaspringbootmybatis.mapper.CorsoMapper;
+import it.eagleprojects.progettoverificaspringbootmybatis.mapper.StudenteMapper;
 import it.eagleprojects.progettoverificaspringbootmybatis.model.Corso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ public class CorsoController {
 
     @Autowired
     private CorsoMapper corsoMapper;
+
+    @Autowired
+    private StudenteMapper studenteMapper;
 
     @Operation(summary = "Metodo che permette di ottenere tutti i Corsi")
     @GetMapping("corsi")
@@ -48,16 +52,16 @@ public class CorsoController {
     }
 
 
-//    @Operation(summary = "Metodo che permette di ottenere gli Studenti iscritti ad un Corso dato il corsoId")
-//    @GetMapping( "/corsi/{corsoId}/studenti")
-//    public @ResponseBody ResponseEntity<List<Studente>> getAllStudentiByCorsoId(@PathVariable("corsoId") Long corsoId)
-//            throws Exception {
-//        if (corsoMapper.getCorsoById(corsoId) == null) {
-//            throw new Exception("Non esiste un Corso con id = " + corsoId);
-//        } else {
-//            return new ResponseEntity<>(studenteMapper.getAllStudentiByCorsoId(corsoId), HttpStatus.OK);
-//        }
-//    }
+    @Operation(summary = "Metodo che permette di ottenere i Corsi frequentati da uno Studente dato lo studenteId")
+    @GetMapping( "/studenti/{studenteId}/corsi")
+    public @ResponseBody ResponseEntity<List<Corso>> getAllCorsiByStudenteId(@PathVariable("studenteId") Long studenteId)
+            throws Exception {
+        if (studenteMapper.getStudenteById(studenteId) == null) {
+            throw new Exception("Non esiste uno Studente con id = " + studenteId);
+        } else {
+            return new ResponseEntity<>(corsoMapper.getAllCorsiByStudenteId(studenteId), HttpStatus.OK);
+        }
+    }
 
 
 

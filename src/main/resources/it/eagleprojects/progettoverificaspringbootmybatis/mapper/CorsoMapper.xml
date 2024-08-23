@@ -46,6 +46,13 @@
         WHERE c.id = #{corsoId}
     </select>
 
+    <select id="getAllCorsiByStudenteId" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso"
+            resultMap="corsoResult">
+        SELECT c.id, c.nome, c.cfu, c.ore
+        FROM corsi c JOIN corsi_studenti_iscrizioni csi on c.id  = csi.studenteid JOIN studenti s on s.id  = csi.studenteid
+        WHERE s.id = #{studenteId}
+    </select>
+
     <insert id="insertCorso" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso"
             keyProperty="id" useGeneratedKeys="true">
         INSERT INTO corsi (nome, cfu, ore)
@@ -69,13 +76,6 @@
 
 
     <!--
-
-    <select id="getAllCorsiByStudenteId" resultType="corso"
-            resultMap="corsoResult">
-        SELECT c.id, c.nome, c.cfu, c.ore
-        FROM corsi c JOIN corsi_studenti_iscrizioni csi on c.id  = csi.studenteid JOIN studenti s on s.id  = csi.corsoid
-        WHERE s.id = #{studenteId}
-    </select>
 
     <insert id="insertCorsoToStudente" parameterType="csi">
         INSERT INTO corsi_studenti_iscrizioni(corsoid, studenteid)

@@ -55,9 +55,6 @@
                   = #{matricola}
     </select>
 
-
-
-
     <select id="getAllStudentiByCorsoId" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente"
             resultMap="studenteResult">
         SELECT s.id, s.nome, s.cognome, s.email, s.matricola
@@ -66,8 +63,6 @@
                        JOIN corsi c on c.id = csi.corsoid
         WHERE c.id = #{corsoId}
     </select>
-
-
 
     <insert id="insertStudente" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente"
             keyProperty="id" useGeneratedKeys="true">
@@ -94,14 +89,7 @@
     </delete>
 
     <!--
-    <select id="getAllStudentiByCorsoId" resultType="studente"
-            resultMap="studenteResult">
-        SELECT s.id, s.nome, s.cognome, s.email, s.matricola
-        FROM
-            studenti s JOIN corsi_studenti_iscrizioni csi on s.id = csi.studenteid
-                       JOIN corsi c on c.id = csi.corsoid
-        WHERE c.id = #{corsoId}
-    </select>
+
 
 
     <insert id="insertStudenteToCorso" parameterType="csi">
