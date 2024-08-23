@@ -1,34 +1,21 @@
 package it.eagleprojects.progettoverificaspringbootmybatis.controller;
 
-import io.swagger.v3.core.util.Json;
-import it.eagleprojects.progettoverificaspringbootmybatis.mapper.StudenteMapper;
-import it.eagleprojects.progettoverificaspringbootmybatis.model.Corso;
+
 import it.eagleprojects.progettoverificaspringbootmybatis.model.Studente;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.OrderWith;
 import org.junit.runner.RunWith;
 import org.junit.runner.manipulation.Alphanumeric;
-import org.mockito.InjectMocks;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -96,11 +83,11 @@ public class StudenteControllerTest {
                 .andReturn();
 
         JSONObject jsonObject = new JSONObject(ritorno.getResponse().getContentAsString());
-        Long id = Long.valueOf(jsonObject.get("id").toString());
+        long id = Long.parseLong(jsonObject.get("id").toString());
 
         this.mockMvc
                 .perform(
-                        MockMvcRequestBuilders.put("/studenti/{studenteId}", id.toString())
+                        MockMvcRequestBuilders.put("/studenti/{studenteId}", Long.toString(id))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .content(requestBody)
@@ -113,23 +100,23 @@ public class StudenteControllerTest {
                 .andReturn();
 
         JSONObject jsonObject = new JSONObject(ritorno.getResponse().getContentAsString());
-        Long id = Long.valueOf(jsonObject.get("id").toString());
+        long id = Long.parseLong(jsonObject.get("id").toString());
 
 
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/studenti/" + id.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/studenti/" + Long.toString(id)))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void testA7InsertStudenteToCorsoTest() throws Exception {
 
-        Long idStudente = 3L;
-        Long idCorso = 1L;
-        String requestBody = "{\"id\":"+idStudente.toString() +"}";
+        long idStudente = 3L;
+        long idCorso = 1L;
+        String requestBody = "{\"id\":"+ Long.toString(idStudente) +"}";
 
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/corsi/"+idCorso.toString()+"/studenti").contentType(MediaType.APPLICATION_JSON)
+                .perform(MockMvcRequestBuilders.post("/corsi/"+ Long.toString(idCorso) +"/studenti").contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
                 ).andExpect(status().isCreated());
@@ -138,13 +125,13 @@ public class StudenteControllerTest {
     @Test
     public void testA8DeleteStudenteFromCorsoTest() throws Exception {
 
-        Long idStudente = 3L;
-        Long idCorso = 1L;
-        String requestBody = "{\"id\":"+idStudente.toString() +"}";
+        long idStudente = 3L;
+        long idCorso = 1L;
+        String requestBody = "{\"id\":"+ Long.toString(idStudente) +"}";
 
 
         this.mockMvc
-                .perform(MockMvcRequestBuilders.delete("/corsi/"+idCorso.toString()+"/studenti").contentType(MediaType.APPLICATION_JSON)
+                .perform(MockMvcRequestBuilders.delete("/corsi/"+ Long.toString(idCorso) +"/studenti").contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
                 ).andExpect(status().isNoContent());
