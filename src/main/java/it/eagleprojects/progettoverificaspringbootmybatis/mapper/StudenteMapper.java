@@ -12,6 +12,8 @@ public interface StudenteMapper {
 
     Studente getStudenteById(Long studenteId);
 
+    Studente getStudenteByMatricola(String matricola);
+
     void insertStudente(Studente studente);
 
     void updateStudenteById(Studente studente);

@@ -13,6 +13,8 @@ public interface CorsoMapper {
 
     Corso getCorsoById(Long corsoId);
 
+    Corso getCorsoByNome(String corsoNome);
+
     void insertCorso(Corso corso);
 
     void updateCorsoById(Corso corso);

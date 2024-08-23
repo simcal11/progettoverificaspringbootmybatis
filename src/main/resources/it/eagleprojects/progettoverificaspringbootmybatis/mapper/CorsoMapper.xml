@@ -32,6 +32,13 @@
         FROM corsi c LEFT JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid LEFT JOIN studenti s on s.id  = csi.studenteid
     </select>
 
+    <select id="getCorsoByNome" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso"
+            resultMap="corsoResult">
+        SELECT c.id, c.nome, c.cfu, c.ore, s.id as s_id, s.nome as s_nome, s.cognome as s_cognome, s.email as s_email, s.matricola as s_matricola
+        FROM corsi c LEFT JOIN corsi_studenti_iscrizioni csi on c.id  = csi.corsoid LEFT JOIN studenti s on s.id  = csi.studenteid
+        WHERE c.nome = #{corsoNome}
+    </select>
+
     <select id="getCorsoById" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso"
             resultMap="corsoResult">
         SELECT c.id, c.nome, c.cfu, c.ore, s.id as s_id, s.nome as s_nome, s.cognome as s_cognome, s.email as s_email, s.matricola as s_matricola
@@ -47,7 +54,7 @@
 
     <update id="updateCorsoById" parameterType="it.eagleprojects.progettoverificaspringbootmybatis.model.Corso">
         UPDATE corsi
-        SET nome=#{nome}, cfu=#{cfu}, ore=#{ore}
+        SET nome= #{nome}, cfu= #{cfu}, ore= #{ore}
         WHERE id=#{id}
     </update>
 

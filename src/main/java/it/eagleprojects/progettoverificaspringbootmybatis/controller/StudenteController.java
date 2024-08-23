@@ -36,6 +36,18 @@ public class StudenteController {
         return new ResponseEntity<>(studente, HttpStatus.OK);
     }
 
+    @Operation(summary = "Metodo che permette di ottenere uno Studente data la matricola")
+    @GetMapping("/studenti/matricola/{matricola}")
+    @ResponseBody
+    public ResponseEntity<Studente> getStudenteByMatricola(@PathVariable("matricola") String matricola) throws Exception {
+        Studente studente = studenteMapper.getStudenteByMatricola(matricola);
+        if (studente == null) {
+            throw new Exception("Non esiste uno Studente con matricola = " + matricola);
+        }
+        return new ResponseEntity<>(studente, HttpStatus.OK);
+    }
+
+
 //    @Operation(summary = "Metodo che permette di ottenere gli Studenti iscritti ad un Corso dato il corsoId")
 //    @GetMapping( "/corsi/{corsoId}/studenti")
 //    public @ResponseBody ResponseEntity<List<Studente>> getAllStudentiByCorsoId(@PathVariable("corsoId") Long corsoId)
@@ -52,6 +64,7 @@ public class StudenteController {
     @Operation(summary = "Metodo che permette di aggiungere uno Studente")
     @PostMapping("/studenti")
     public ResponseEntity<Studente> insertStudente(@RequestBody Studente studente){
+
         studenteMapper.insertStudente(studente);
         return new ResponseEntity<>(studente,  HttpStatus.CREATED);
     }

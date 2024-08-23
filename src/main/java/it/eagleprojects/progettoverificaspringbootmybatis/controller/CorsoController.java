@@ -2,9 +2,7 @@ package it.eagleprojects.progettoverificaspringbootmybatis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import it.eagleprojects.progettoverificaspringbootmybatis.mapper.CorsoMapper;
-import it.eagleprojects.progettoverificaspringbootmybatis.mapper.StudenteMapper;
 import it.eagleprojects.progettoverificaspringbootmybatis.model.Corso;
-import it.eagleprojects.progettoverificaspringbootmybatis.model.Studente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +35,18 @@ public class CorsoController {
         }
         return new ResponseEntity<>(corso, HttpStatus.OK);
     }
+
+    @Operation(summary = "Metodo che permette di ottenere un Corso dato il nome")
+    @GetMapping("/corsi/nome/{corsoNome}")
+    @ResponseBody
+    public ResponseEntity<Corso> getCorsobyNome(@PathVariable("corsoNome") String corsoNome) throws Exception {
+        Corso corso = corsoMapper.getCorsoByNome(corsoNome);
+        if (corso == null) {
+            throw new Exception("Non esiste un Corso con nome = " + corsoNome);
+        }
+        return new ResponseEntity<>(corso, HttpStatus.OK);
+    }
+
 
 //    @Operation(summary = "Metodo che permette di ottenere gli Studenti iscritti ad un Corso dato il corsoId")
 //    @GetMapping( "/corsi/{corsoId}/studenti")

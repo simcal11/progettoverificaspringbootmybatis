@@ -45,6 +45,17 @@
                   = #{studenteId}
     </select>
 
+    <select id="getStudenteByMatricola" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente" resultMap="studenteResult">
+        SELECT s.id, s.nome, s.cognome, s.email, s.matricola, c.id
+            as corso_id, c.nome as corso_nome, c.cfu as corso_cfu, c.ore as
+               corso_ore
+        FROM studenti s LEFT JOIN corsi_studenti_iscrizioni csi
+                                  on s.id = csi.studenteid LEFT JOIN corsi c on c.id = csi.corsoid
+        WHERE s.matricola
+                  = #{matricola}
+    </select>
+
+
 
 
     <select id="getAllStudentiByCorsoId" resultType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente"
