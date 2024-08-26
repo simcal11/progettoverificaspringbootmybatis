@@ -2,15 +2,15 @@ version: '3'
 
 services:
 
-  # app:
-  #   container_name: progettoverificaspringbootmybatis
-  #   build: .
-  #   image: progettoverificaspringbootmybatis
-  #   ports:
-  #     - 8080:8080
-  #   networks:
-  #     default:
-  #       ipv4_address: 172.50.0.5
+  app:
+    container_name: progettoverificaspringbootmybatis
+    build: .
+    image: progettoverificaspringbootmybatis
+    ports:
+      - 8080:8080
+    networks:
+      default:
+        ipv4_address: 172.50.0.5
     #network_mode: bridge
 
   db:
