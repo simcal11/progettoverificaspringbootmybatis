@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Insert Studente To Corso Result</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Studente </h1>
+<p th:text="'nome: ' + ${studente.nome}" />
+<p th:text="'cognome: ' + ${studente.cognome}" />
+<p th:text="'matricola: ' + ${studente.matricola}" />
+<p th:text="'email: ' + ${studente.email}" />
+
+<h1>aggiunto al Corso: </h1>
+<p th:text="'nome: ' + ${corso.nome}" />
+<p th:text="'cfu: ' + ${corso.cfu}" />
+<p th:text="'ore: ' + ${corso.ore}" />
+
+<h1>con successo!</h1>
+
+<a th:href="@{'/allCorsi/'+ ${corso.id}+'/addStudente'}">Aggiungi un altro Corso allo Studente
+        <span th:text="${studente.nome}" />
+        <span th:text="${studente.cognome}" />
+</a>
+<br/>
+<a href="/allStudenti">Visualizza Studenti</a>
+</body>
+</html>

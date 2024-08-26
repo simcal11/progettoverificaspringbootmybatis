@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Corsi</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<!--
+<p th:text="|Corso 1: ${listaCorsi[0].getNome()}!|" />
+-->
+
+<span> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
+
+<h1>
+    Visualizza Corsi
+    <span th:if="${studente}" th:text=" 'di Studente: '+ ${studente.nome} + ' ' +${studente.cognome} + ' ' +${studente.matricola} + ' ' +${studente.email}"/>
+</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th> id </th>
+        <th> nome </th>
+        <th> cfu </th>
+        <th> ore </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${listaCorsi == null || listaCorsi.empty}">
+        <td colspan="5"> Non ci sono Corsi </td>
+    </tr>
+    <tr th:each="corso : ${listaCorsi}">
+        <td><span th:text="${corso.id}">  </span></td>
+        <td><span th:text="${corso.nome}">  </span></td>
+        <td><span th:text="${corso.cfu}">  </span></td>
+        <td><span th:text="${corso.ore}">  </span></td>
+
+        <td>
+            <form  th:action="@{deleteCorso}" method="post">
+
+                <input type="hidden" name="corsoId" th:value="${corso.id}" />
+                <input type="submit" value="Elimina" />
+            </form>
+        </td>
+
+        <td><a th:href="@{'/updateCorso/' + ${corso.id}}">Modifica</a></td>
+
+        <td><a th:href="@{'/allCorsi/' + ${corso.id}+'/studenti'}">Visualizza Studenti</a></td>
+
+        <td><a th:href="@{'/allCorsi/' + ${corso.id}+'/addStudente'}">Registra uno Studente</a></td>
+
+        <td>
+            <form th:if="${studente}" th:action="@{'/allStudenti/' + ${studente.id}+'/removeCorso/'+${corso.id}}" method="post">
+                <input type="submit" value="Rimuovi Corso da Studente" />
+            </form>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<a href="/insertCorso">Aggiungi uno Corso</a>
+
+
+
+</body>
+</html>

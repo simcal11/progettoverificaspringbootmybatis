@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Update Corso</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Aggiorna Corso</h1>
+<form action="#" th:action="@{/updateCorso}" th:object="${corso}" method="post">
+    <input type="hidden" name="corsoId" th:field="*{id}"/>
+    <p>Nome: <input type="text" th:field="*{nome}" /></p>
+    <p>cfu: <input type="text" th:field="*{cfu}" /></p>
+    <p>ore: <input type="text" th:field="*{ore}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+
+<a href="/allCorsi">Visualizza Corsi</a>
+
+</body>
+</html>

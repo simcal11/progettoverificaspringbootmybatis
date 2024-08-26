@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert Studente a Corso</title>
+</head>
+<body>
+
+<h1>Aggiungi Corso a Studente: <span th:text="|${studente.getNome()}, ${studente.getCognome()}, ${studente.getMatricola()}, ${studente.getEmail()}|"></span></h1>
+
+<div>
+    <span> Seleziona Corso:
+
+        <form action="#" th:action="@{'/allStudenti/'+${studente.id}+'/addCorso'}" th:object="${corso}" method="post">
+
+             <select th:field="*{id}">
+                <option th:each="c:${listaCorsiDisponibili}"  th:value="${c.id}" th:text="${c.nome}" >
+                </option>
+            </select>
+
+            <p><input type="submit" value="Salva" /></p>
+        </form>
+
+    </span>
+</div>
+</body>
+</html>

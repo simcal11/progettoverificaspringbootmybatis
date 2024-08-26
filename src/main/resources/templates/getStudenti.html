@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Studenti</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<!--
+<p th:text="|Studente 1: ${listaStudenti[0].getNome()}!|" />
+-->
+
+<span> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
+
+<h1>
+    Visualizza Studenti
+    <span th:if="${corso}" th:text=" 'di Corso: '+ ${corso.nome} + ' ' +${corso.cfu} + ' ' +${corso.ore} "/>
+</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th> id </th>
+        <th> nome </th>
+        <th> cognome </th>
+        <th> matricola </th>
+        <th> email </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${listaStudenti==null || listaStudenti.empty}">
+        <td colspan="5"> Non ci sono Studenti </td>
+    </tr>
+    <tr th:each="studente : ${listaStudenti}">
+        <td><span th:text="${studente.id}">  </span></td>
+        <td><span th:text="${studente.nome}">  </span></td>
+        <td><span th:text="${studente.cognome}">  </span></td>
+        <td><span th:text="${studente.matricola}">  </span></td>
+        <td><span th:text="${studente.email}">  </span></td>
+
+        <td>
+            <form  th:action="@{deleteStudente}" method="post">
+
+                <input type="hidden" name="studenteId" th:value="${studente.id}" />
+                <input type="submit" value="Elimina" />
+            </form>
+        </td>
+
+        <td><a th:href="@{'/updateStudente/' + ${studente.id}}">Modifica</a></td>
+
+        <td><a th:href="@{'/allStudenti/' + ${studente.id}+'/corsi'}">Visualizza Corsi</a></td>
+
+        <td><a th:href="@{'/allStudenti/' + ${studente.id}+'/addCorso'}">Iscrivi ad un Corso</a></td>
+
+        <td>
+            <form th:if="${corso}" th:action="@{'/allCorsi/' + ${corso.id}+'/removeStudente/'+${studente.id}}" method="post">
+                <input type="submit" value="Rimuovi Studente da Corso" />
+            </form>
+        </td>
+
+
+    </tr>
+    </tbody>
+</table>
+
+<a href="/insertStudente">Aggiungi uno Studente</a>
+
+
+
+</body>
+</html>

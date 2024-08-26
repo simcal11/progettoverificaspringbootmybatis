@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Insert Corso</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Aggiungi Corso</h1>
+<form action="#" th:action="@{/insertCorso}" th:object="${corso}" method="post">
+    <p>Nome: <input type="text" th:field="*{nome}" /></p>
+    <p>cfu: <input type="text" th:field="*{cfu}" /></p>
+    <p>ore: <input type="text" th:field="*{ore}" /></p>
+    <p><input type="submit" value="Salva" /> <input type="reset" value="Resetta" /></p>
+</form>
+
+<a href="/allCorsi">Visualizza Corsi</a>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Update Corso Result</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Corso aggiornato con successo!</h1>
+<p th:text="'nome: ' + ${corso.nome}" />
+<p th:text="'cfu ' + ${corso.cfu}" />
+<p th:text="'ore: ' + ${corso.ore}" />
+
+<a href="/insertCorso">Aggiungi un Corso</a>
+<a href="/allCorsi">Visualizza Corsi</a>
+</body>
+</html>
