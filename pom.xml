@@ -29,14 +29,15 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+
 	<dependencies>
 
-		<!-- Aggiunta per visualizzare una pagina html -->
+		<!-- Aggiunta per visualizzare le pagine html -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		<!-- Fine - Aggiunta per visualizzare una pagina html -->
+		<!-- Fine - Aggiunta per visualizzare le pagine html -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -53,6 +54,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter-test</artifactId>

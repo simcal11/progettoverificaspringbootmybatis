@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Studente implements Serializable {
+public class Studente {
     private Long id;
     private String nome;
     private String cognome;

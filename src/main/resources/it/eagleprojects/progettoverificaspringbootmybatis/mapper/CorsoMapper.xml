@@ -11,6 +11,7 @@
         <collection property="studenti" ofType="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente" resultMap="studenteResult"/>
     </resultMap>
 
+
     <resultMap type="it.eagleprojects.progettoverificaspringbootmybatis.model.Studente" id="studenteResult">
         <id property="id" column="s_id" />
         <result property="nome" column="s_nome" />
