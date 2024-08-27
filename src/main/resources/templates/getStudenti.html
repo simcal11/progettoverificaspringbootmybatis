@@ -53,7 +53,7 @@
         <td><a th:href="@{'/allStudenti/' + ${studente.id}+'/addCorso'}">Iscrivi ad un Corso</a></td>
 
         <td>
-            <form th:if="${corso}" th:action="@{'/allCorsi/' + ${corso.id}+'/removeStudente/'+${studente.id}}" method="post">
+            <form th:if="${corso!=null}" th:action="@{'/allCorsi/' + ${corso.id}+'/removeStudente/'+${studente.id}}" method="post">
                 <input type="submit" value="Rimuovi Studente da Corso" />
             </form>
         </td>

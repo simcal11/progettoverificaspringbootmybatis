@@ -8,8 +8,12 @@
 
 <h1>Aggiungi Corso a Studente: <span th:text="|${studente.getNome()}, ${studente.getCognome()}, ${studente.getMatricola()}, ${studente.getEmail()}|"></span></h1>
 
-<div>
-    <span> Seleziona Corso:
+<div th:if="${listaCorsiDisponibili.isEmpty()}">
+    Lo studente è già iscritto a tutti i Corsi!
+</div>
+
+<div th:if="${!listaCorsiDisponibili.isEmpty()}">
+    <span > Seleziona Corso:
 
         <form action="#" th:action="@{'/allStudenti/'+${studente.id}+'/addCorso'}" th:object="${corso}" method="post">
 
@@ -23,5 +27,8 @@
 
     </span>
 </div>
+
+<span> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
+
 </body>
 </html>
