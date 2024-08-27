@@ -8,8 +8,6 @@ services:
   #   image: progettoverificaspringbootmybatis
   #   ports:
   #     - 8080:8080
-  #   # extra_hosts:
-  #   #   - "host.docker.internal:host-gateway"
   #   networks:
   #     default:
   #       ipv4_address: 172.50.0.5
@@ -23,8 +21,6 @@ services:
       POSTGRES_PASSWORD: "postgres"
     ports:
       - "5432:5432"
-    # extra_hosts:
-    #   - "host.docker.internal:host-gateway"
     networks:
       default:
         ipv4_address: 172.50.0.6
