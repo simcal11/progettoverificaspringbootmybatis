@@ -17,11 +17,18 @@
 1. Realizzazione di una webapp con  Springboot e MyBatis
     1. Creazione del pom.xml per le dipendenze
     1. Creazione del file application.properties per la configurazione basilare di spring e per la connessione al database postgres
-    1. Creazione del package model con Studente.java
-    1. Creazione del package mapper con il mapper StudenteMapper.java
-    1. Creazione del package controller per il Controller di Studente
-    1. Realizzazione delle operazioni di base
-        1. READ (GET) di studenti o di uno studente dato un id
-        1. CREATE (POST) di uno studente
-        1. UPDATE (PUT) di uno studente
-        1. DELETE (DELETE) di uno studente o di tutti gli studenti
+    1. Creazione del file mybatis-config.xml per la configurazione dei mapper
+    1. Creazione del package model con Studente.java, Corso.java e CorsiStudentiIscrizioni.java
+    1. Creazione del package mapper con i mapper StudenteMapper.java, CorsoMapper.java
+    1. Creazione del package controller per:
+       1. StudenteController e CorsoController definiscono le classi controller con i metodi per le API Rest come spiegato nel Corso Spring
+       1. StudenteController2 e CorsoController2 definiscono invece le classi controller con i metodi per le API Rest che permettono la visualizzazione interattiva degli oggetti tramite interfaccia web realizzata con ThymeLeaf
+   1. Realizzazione per entrambe le entità delle operazioni di base (CRUD) + creazione/eliminazione della relazione MANY-TO-MANY tra gli oggetti
+       1. READ (GET) di studenti, corsi, studenti iscritti ad un corso, corsi freqeuntati da uno studente
+       1. CREATE (POST) di uno studente, un corso, assegnazione di uno studente ad un corso, assegnazione di un corso ad uno studente
+       1. UPDATE (PUT) di uno studente, di un corso
+       1. DELETE (DELETE) di uno studente, di un corso, di tutti gli studenti, di tutti i corsi, rimozione di uno studente da un corso, rimozione di un corso da uno studente
+   1. Realizzazione di tutte le pagine .html (all'interno della cartella templates) che permettono la visualizzazione e l'esecuzione delle operazioni appena descrite tramite interfaccia web realizzata con ThymeLeaf
+
+# Test
+1. Realizzazione dei test che verificano il corretto flusso di esecuzione dei metodi delle classi controller StudenteController e CorsoController
