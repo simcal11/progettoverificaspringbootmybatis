@@ -1,5 +1,6 @@
 package it.eagleprojects.progettoverificaspringbootmybatis;
 
+import it.eagleprojects.progettoverificaspringbootmybatis.controller.CorsoController;
 import it.eagleprojects.progettoverificaspringbootmybatis.controller.StudenteController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,17 @@ class ProgettoverificaspringbootmybatisApplicationTests {
 	@Autowired
 	StudenteController studenteController;
 
+	@Autowired
+	CorsoController corsoController;
+
 	@Test
-	void contextLoads() {
+	void contextLoadsStudenteController() {
 		Assertions.assertThat(studenteController).isNotNull();
+	}
+
+	@Test
+	void contextLoadsCorsoController() {
+		Assertions.assertThat(corsoController).isNotNull();
 	}
 
 
