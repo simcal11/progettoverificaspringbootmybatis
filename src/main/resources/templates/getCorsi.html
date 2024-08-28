@@ -37,7 +37,7 @@
         <td><span th:text="${corso.ore}">  </span></td>
 
         <td>
-            <form  th:action="@{deleteCorso}" method="post">
+            <form th:if="${studente==null}" th:action="@{deleteCorso}" method="post">
 
                 <input type="hidden" name="corsoId" th:value="${corso.id}" />
                 <input type="submit" value="Elimina" />

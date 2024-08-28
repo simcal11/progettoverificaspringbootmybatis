@@ -39,7 +39,7 @@
         <td><span th:text="${studente.email}">  </span></td>
 
         <td>
-            <form  th:action="@{deleteStudente}" method="post">
+            <form th:if="${corso==null}"  th:action="@{deleteStudente}" method="post">
 
                 <input type="hidden" name="studenteId" th:value="${studente.id}" />
                 <input type="submit" value="Elimina" />

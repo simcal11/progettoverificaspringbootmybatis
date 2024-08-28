@@ -21,6 +21,11 @@ public class CorsoController2 {
     @Autowired
     private StudenteMapper studenteMapper;
 
+    @GetMapping("/")
+    public String index(Model model) {
+        return "getStudenti";
+    }
+
     @GetMapping("/allCorsi")
     public String mostraCorsi(Model model) {
         List<Corso> listaCorsi =  corsoMapper.getAllCorsi();
@@ -116,12 +121,17 @@ public class CorsoController2 {
 
         Corso corso = corsoMapper.getCorsoById(corsoId);
 
+        System.out.println(studenteId);
+        for(Corso c : corsoMapper.getAllCorsiByStudenteId(studenteId)) {
+            System.out.println(c.getId());
+        }
+
         corsoMapper.deleteCorsoFromStudente(studenteId, corso);
 
         model.addAttribute("studente", studenteMapper.getStudenteById(studenteId));
         model.addAttribute("listaCorsi", corsoMapper.getAllCorsiByStudenteId(studenteId));
 
-        return "getStudenti";
+        return "getCorsi";
     }
 
 
