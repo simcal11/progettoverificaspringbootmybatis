@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>Aggiorna Studente</h1>
-<form action="#" th:action="@{/updateStudente}" th:object="${studente}" method="post">
-    <input type="hidden" name="corsoId" th:field="*{id}"/>
+<form action="#" th:action="@{'/updateStudente/'+${studente.id}}" th:object="${studente}" method="post">
+    <input type="hidden" name="studenteId" th:field="*{id}"/>
     <p>Nome: <input type="text" th:field="*{nome}" /></p>
     <p>Cognome: <input type="text" th:field="*{cognome}" /></p>
     <p>Matricola: <input type="text" th:field="*{matricola}" /></p>
@@ -15,7 +15,7 @@
     <p><input type="submit" value="Submit" />
 </form>
 
-<a href="/allStudenti">Visualizza Studenti</a>
+<a href="/allStudenti">Torna a Studenti</a>
 
 </body>
 </html>

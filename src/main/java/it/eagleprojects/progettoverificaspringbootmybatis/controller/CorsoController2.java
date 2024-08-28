@@ -4,6 +4,8 @@ import it.eagleprojects.progettoverificaspringbootmybatis.mapper.CorsoMapper;
 import it.eagleprojects.progettoverificaspringbootmybatis.mapper.StudenteMapper;
 import it.eagleprojects.progettoverificaspringbootmybatis.model.Corso;
 import it.eagleprojects.progettoverificaspringbootmybatis.model.Studente;
+import it.eagleprojects.progettoverificaspringbootmybatis.service.CorsoService;
+import it.eagleprojects.progettoverificaspringbootmybatis.service.StudenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,22 +17,27 @@ import java.util.List;
 @Controller
 public class CorsoController2 {
 
-    @Autowired
-    CorsoMapper corsoMapper;
+//    @Autowired
+//    CorsoMapper corsoMapper;
+//
+//    @Autowired
+//    private StudenteMapper studenteMapper;
 
     @Autowired
-    private StudenteMapper studenteMapper;
+    private CorsoService corsoService;
+
+    @Autowired
+    private StudenteService studenteService;
 
     @GetMapping("/")
     public String index(Model model) {
-        return "getStudenti";
+        model.addAttribute("listaCorsi", corsoService.getAllCorsi());
+        return "getCorsi";
     }
 
     @GetMapping("/allCorsi")
     public String mostraCorsi(Model model) {
-        List<Corso> listaCorsi =  corsoMapper.getAllCorsi();
-
-        model.addAttribute("listaCorsi", listaCorsi);
+        model.addAttribute("listaCorsi", corsoService.getAllCorsi());
         return "getCorsi";
     }
 
@@ -42,95 +49,74 @@ public class CorsoController2 {
 
     @PostMapping("/insertCorso")
     public String insertCorsoSubmit(@ModelAttribute Corso corso, Model model) {
-        corsoMapper.insertCorso(corso);
+        corsoService.insertCorso(corso);
         model.addAttribute("corso", corso);
         return "insertCorsoResult";
     }
 
-    @PostMapping(value = "/deleteCorso")
-    public String deleteCorso(@RequestParam String corsoId) {
-
-        corsoMapper.deleteCorsoById(Long.valueOf(corsoId));
+    @PostMapping(value = "/deleteCorso/{id}")
+    public String deleteCorsoById(@PathVariable(name = "id") Long corsoId) {
+        corsoService.deleteCorsoById(corsoId);
         return "redirect:/allCorsi";
     }
 
+    //Altro modo
+    /*@PostMapping(value = "/deleteCorso")
+    public String deleteCorso(@RequestParam String corsoId) {
+        corsoService.deleteCorsoById(Long.valueOf(corsoId));
+        return "redirect:/allCorsi";
+    }*/
+
     @GetMapping("/updateCorso/{id}")
-    public ModelAndView mostraUpdateCorsoForm(@PathVariable(name="id") Long corsoId) {
+    public ModelAndView mostraUpdateCorsoForm(@PathVariable(name = "id") Long corsoId) {
         ModelAndView editView = new ModelAndView("updateCorso");
-        Corso corso = corsoMapper.getCorsoById(corsoId);
-        corsoMapper.updateCorsoById(corso);
-        editView.addObject("corso", corso);
+        editView.addObject("corso", corsoService.getCorsoById(corsoId));
         return editView;
     }
 
-    @PostMapping("/updateCorso")
+    @PostMapping("/updateCorso/{id}")
     public String updateCorsoSubmit(@ModelAttribute Corso corso, Model model) {
-        corsoMapper.updateCorsoById(corso);
+        corsoService.updateCorsoById(corso);
         model.addAttribute("corso", corso);
         return "updateCorsoResult";
     }
 
-    @GetMapping("/allCorsi/{id}/studenti")
-    public String getAllStudentiByCorsoId(@PathVariable(name="id") Long corsoId, Model model) {
-        List<Studente> listaStudentiByCorsoId =  studenteMapper.getAllStudentiByCorsoId(corsoId);
 
-        model.addAttribute("listaStudenti", listaStudentiByCorsoId);
-        model.addAttribute("corso", corsoMapper.getCorsoById(corsoId));
-        return "getStudenti";
+    @GetMapping("/allStudenti/{id}/corsi")
+    public String getAllCorsiByStudenteId(@PathVariable(name = "id") Long studenteId, Model model) {
+        model.addAttribute("listaCorsi", corsoService.getAllCorsiByStudenteId(studenteId));
+        model.addAttribute("studente", studenteService.getStudenteById(studenteId));
+        return "getCorsi";
     }
 
-
-    @GetMapping("/allCorsi/{id}/addStudente")
-    public String addStudenteToCorso(@PathVariable(name="id") Long corsoId, Model model) {
-        List<Studente> listaAllStudenti =  studenteMapper.getAllStudenti();
-        List<Studente> listaStudentiByCorsoId =  studenteMapper.getAllStudentiByCorsoId(corsoId);
-
-        for (Studente studente : listaStudentiByCorsoId) {
-            for(Studente studente2 : listaAllStudenti) {
-                if(studente.getId().equals(studente2.getId())) {
-                    listaAllStudenti.remove(studente2);
-                    //Debug
-                    break;
-                }
-            }
-        }
-
-        model.addAttribute("listaStudentiDisponibili", listaAllStudenti);
-        model.addAttribute("corso", corsoMapper.getCorsoById(corsoId));
-        model.addAttribute("studente", new Studente());
-        return "insertStudenteToCorso";
+    @GetMapping("/allStudenti/{id}/addCorso")
+    public String addCorsoToStudente(@PathVariable(name = "id") Long studenteId, Model model) {
+        model.addAttribute("listaCorsiDisponibili", corsoService.getAllCorsiDisponibiliForStudenteId(studenteId));
+        model.addAttribute("studente", studenteService.getStudenteById(studenteId));
+        model.addAttribute("corso", new Corso());
+        return "insertCorsoToStudente";
     }
 
-    @PostMapping("/allCorsi/{id}/addStudente")
-    public String addStudenteToCorsoSubmit(@PathVariable(name="id") Long corsoId, @ModelAttribute Studente studente, Model model) {
-
-        studente = studenteMapper.getStudenteById(studente.getId());
-        Corso corso = corsoMapper.getCorsoById(corsoId);
-
-        studenteMapper.insertStudenteToCorso(corsoId, studente);
-
-        model.addAttribute("studente", studente);
-        model.addAttribute("corso", corso);
-        return "insertStudenteToCorsoResult";
+    @PostMapping("/allStudenti/{id}/addCorso")
+    public String addCorsoToStudenteSubmit(@PathVariable(name = "id") Long studenteId, @ModelAttribute Corso corso, Model model) {
+        corsoService.insertCorsoToStudente(studenteId, corso);
+        model.addAttribute("corso", corsoService.getCorsoById(corso.getId()));
+        model.addAttribute("studente", studenteService.getStudenteById(studenteId));
+        return "insertCorsoToStudenteResult";
 
     }
-
 
     @PostMapping(value = "/allStudenti/{studenteId}/removeCorso/{corsoId}")
-    public String deleteCorsoFromStudente(@PathVariable(name="studenteId") Long studenteId, @PathVariable(name="corsoId") Long corsoId, Model model) {
-
-        Corso corso = corsoMapper.getCorsoById(corsoId);
-
-        System.out.println(studenteId);
-        for(Corso c : corsoMapper.getAllCorsiByStudenteId(studenteId)) {
+    public String deleteCorsoFromStudente(@PathVariable(name = "studenteId") Long studenteId, @PathVariable(name = "corsoId") Long corsoId, Model model) {
+        //Debug
+        /*System.out.println(studenteId);
+        for (Corso c : corsoService.getAllCorsiByStudenteId(studenteId)) {
             System.out.println(c.getId());
-        }
+        }*/
 
-        corsoMapper.deleteCorsoFromStudente(studenteId, corso);
-
-        model.addAttribute("studente", studenteMapper.getStudenteById(studenteId));
-        model.addAttribute("listaCorsi", corsoMapper.getAllCorsiByStudenteId(studenteId));
-
+        corsoService.deleteCorsoFromStudente(studenteId, corsoService.getCorsoById(corsoId));
+        model.addAttribute("studente", studenteService.getStudenteById(studenteId));
+        model.addAttribute("listaCorsi", corsoService.getAllCorsiByStudenteId(studenteId));
         return "getCorsi";
     }
 

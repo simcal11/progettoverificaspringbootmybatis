@@ -10,7 +10,7 @@
 <p th:text="|Corso 1: ${listaCorsi[0].getNome()}!|" />
 -->
 
-<span> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
+<span th:if="${studente==null}"> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
 
 <h1>
     Visualizza Corsi
@@ -36,13 +36,21 @@
         <td><span th:text="${corso.cfu}">  </span></td>
         <td><span th:text="${corso.ore}">  </span></td>
 
-        <td>
-            <form th:if="${studente==null}" th:action="@{deleteCorso}" method="post">
 
-                <input type="hidden" name="corsoId" th:value="${corso.id}" />
-                <input type="submit" value="Elimina" />
-            </form>
-        </td>
+<!--        <td>-->
+<!--            <form th:if="${studente==null}" th:action="@{deleteCorso}" method="post">-->
+
+<!--                <input type="hidden" name="corsoId" th:value="${corso.id}" />-->
+<!--                <input type="submit" value="Elimina" />-->
+<!--            </form>-->
+<!--        </td>-->
+
+                <td>
+                    <form th:if="${studente==null}" th:action="@{'/deleteCorso/' + ${corso.id}}" method="post">
+                        <input type="submit" value="Elimina" />
+                    </form>
+                </td>
+
 
         <td><a th:href="@{'/updateCorso/' + ${corso.id}}">Modifica</a></td>
 
@@ -60,8 +68,8 @@
     </tbody>
 </table>
 
-<a href="/insertCorso">Aggiungi uno Corso</a>
-
+<a th:if="${studente==null}" href="/insertCorso">Aggiungi uno Corso</a>
+<a th:if="${studente!=null}" href="/allStudenti">Torna a Studenti</a>
 
 
 </body>

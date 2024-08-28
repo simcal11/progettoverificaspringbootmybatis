@@ -10,7 +10,7 @@
 <p th:text="|Studente 1: ${listaStudenti[0].getNome()}!|" />
 -->
 
-<span> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
+<span th:if="${corso==null}"> <a href="/allStudenti">Studenti</a> <a href="/allCorsi">Corsi</a> </span>
 
 <h1>
     Visualizza Studenti
@@ -52,8 +52,14 @@
 
         <td><a th:href="@{'/allStudenti/' + ${studente.id}+'/addCorso'}">Iscrivi ad un Corso</a></td>
 
+<!--        <td>-->
+<!--            <form th:if="${corso!=null}" th:action="@{'/allCorsi/' + ${corso.id}+'/removeStudente/'+${studente.id}}" method="post">-->
+<!--                <input type="submit" value="Rimuovi Studente da Corso" />-->
+<!--            </form>-->
+<!--        </td>-->
+
         <td>
-            <form th:if="${corso!=null}" th:action="@{'/allCorsi/' + ${corso.id}+'/removeStudente/'+${studente.id}}" method="post">
+            <form th:if="${corso!=null}" th:action="@{'/deleteStudente/' + ${studente.id}}" method="post">
                 <input type="submit" value="Rimuovi Studente da Corso" />
             </form>
         </td>
@@ -63,7 +69,8 @@
     </tbody>
 </table>
 
-<a href="/insertStudente">Aggiungi uno Studente</a>
+<a th:if="${corso==null}" href="/insertStudente">Aggiungi uno Studente</a>
+<a th:if="${corso!=null}" href="/allCorsi">Torna a Corsi</a>
 
 
 
